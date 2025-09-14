@@ -124,7 +124,7 @@ async function startMic() {
 
     const flames = document.querySelectorAll('.flame');
     const smokes = document.querySelectorAll('.smoke');
-    const THRESHOLD = 30; // Üfleme hassasiyeti
+    const THRESHOLD = 120; // Üfleme hassasiyeti
 
     function checkVolume() {
       analyser.getByteTimeDomainData(dataArray);
