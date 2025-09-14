@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Masal'ın Doğum Günü</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url("masal.png") no-repeat center center/cover;
+    }
+
+    .candle {
+      position: relative;
+      width: 40px;
+      height: 120px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .flame {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 50px;
+      background: radial-gradient(ellipse at center, #ffeb3b 0%, #ff9800 70%, transparent 100%);
+      border-radius: 50% 50% 50% 50%;
+      animation: flicker 1s infinite;
+    }
+
+    @keyframes flicker {
+      0%   { transform: translateX(-50%) scale(1); opacity: 1; }
+      25%  { transform: translateX(-50%) scale(1.1, 0.9); opacity: 0.9; }
+      50%  { transform: translateX(-50%) scale(0.9, 1.1); opacity: 1; }
+      75%  { transform: translateX(-50%) scale(1.05, 0.95); opacity: 0.95; }
+      100% { transform: translateX(-50%) scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="candle">
+    <div class="flame"></div>
+  </div>
+</body>
+</html>
