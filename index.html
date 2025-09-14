@@ -11,26 +11,39 @@
       align-items: center;
       justify-content: center;
       background: url("masal.png") no-repeat center center/cover;
+      font-family: sans-serif;
     }
 
-    .candle {
+    /* Pasta tabanı */
+    .cake {
       position: relative;
-      width: 40px;
+      width: 200px;
       height: 120px;
+      background: linear-gradient(to top, #f9c5d1, #f28e9b);
+      border-radius: 100px 100px 20px 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    /* Mumlar */
+    .candle {
+      position: absolute;
+      bottom: 100%;
+      width: 12px;
+      height: 40px;
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      border-radius: 4px;
+      margin: 0 5px;
     }
 
     .flame {
       position: absolute;
-      top: -40px;
+      top: -20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 30px;
-      height: 50px;
+      width: 12px;
+      height: 20px;
       background: radial-gradient(ellipse at center, #ffeb3b 0%, #ff9800 70%, transparent 100%);
-      border-radius: 50% 50% 50% 50%;
+      border-radius: 50%;
       animation: flicker 1s infinite;
     }
 
@@ -41,11 +54,27 @@
       75%  { transform: translateX(-50%) scale(1.05, 0.95); opacity: 0.95; }
       100% { transform: translateX(-50%) scale(1); opacity: 1; }
     }
+
+    /* Mumlar pasta üstünde hizalanacak */
+    .candles {
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+    }
+
   </style>
 </head>
 <body>
-  <div class="candle">
-    <div class="flame"></div>
+  <div class="cake">
+    <div class="candles">
+      <div class="candle"><div class="flame"></div></div>
+      <div class="candle"><div class="flame"></div></div>
+      <div class="candle"><div class="flame"></div></div>
+      <!-- İstersen daha fazla mum ekleyebilirsin -->
+    </div>
   </div>
 </body>
 </html>
