@@ -24,7 +24,6 @@ body {
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 
-/* Pasta altı gölge */
 .cake::after {
   content:'';
   position:absolute;
@@ -37,7 +36,6 @@ body {
   border-radius:50%;
 }
 
-/* Mumlar konteyner */
 .candles {
   position:absolute;
   top:-40px;
@@ -47,7 +45,6 @@ body {
   gap:10px;
 }
 
-/* Mum gövdesi */
 .candle {
   position: relative;
   width: 12px;
@@ -57,7 +54,6 @@ body {
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
-/* Mum alevi */
 .flame {
   position:absolute;
   top:-20px;
@@ -68,6 +64,27 @@ body {
   background: radial-gradient(ellipse at center, #ffeb3b 0%, #ff9800 70%, transparent 100%);
   border-radius:50%;
   animation: flicker 0.9s infinite;
+  transition: opacity 0.5s;
+}
+
+/* Mum sönünce flame opacity 0 */
+.flame.off {
+  opacity: 0;
+}
+
+/* Duman efekti */
+.smoke {
+  position:absolute;
+  top:-20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:12px;
+  height:40px;
+  pointer-events:none;
+  background: radial-gradient(ellipse at center, rgba(200,200,200,0.5) 0%, transparent 100%);
+  border-radius:50%;
+  animation: rise 2s linear infinite;
+  opacity:0;
 }
 
 @keyframes flicker {
@@ -77,16 +94,64 @@ body {
   75% {transform:translateX(-50%) scale(1.05,0.95); opacity:0.95;}
   100% {transform:translateX(-50%) scale(1); opacity:1;}
 }
+
+@keyframes rise {
+  0% { transform:translateX(-50%) translateY(0) scale(1); opacity:0.5; }
+  100% { transform:translateX(-50%) translateY(-50px) scale(1.5); opacity:0; }
+}
 </style>
 </head>
 <body>
 <div class="cake">
   <div class="candles">
-    <div class="candle"><div class="flame"></div></div>
-    <div class="candle"><div class="flame"></div></div>
-    <div class="candle"><div class="flame"></div></div>
-    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div><div class="smoke"></div></div>
+    <div class="candle"><div class="flame"></div><div class="smoke"></div></div>
+    <div class="candle"><div class="flame"></div><div class="smoke"></div></div>
+    <div class="candle"><div class="flame"></div><div class="smoke"></div></div>
   </div>
 </div>
+
+<script>
+async function startMic() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioCtx.createMediaStreamSource(stream);
+    const analyser = audioCtx.createAnalyser();
+    source.connect(analyser);
+    analyser.fftSize = 256;
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+    const flames = document.querySelectorAll('.flame');
+    const smokes = document.querySelectorAll('.smoke');
+    const THRESHOLD = 50; // Üfleme hassasiyeti (0-255)
+
+    function checkVolume() {
+      analyser.getByteFrequencyData(dataArray);
+      let sum = 0;
+      for (let i=0;i<dataArray.length;i++) sum += dataArray[i];
+      let avg = sum/dataArray.length;
+
+      if(avg > THRESHOLD){
+        // Mumları söndür
+        flames.forEach(f => f.classList.add('off'));
+        smokes.forEach(s => s.style.opacity=1); // Duman çıkıyor
+      } else {
+        flames.forEach(f => f.classList.remove('off'));
+        smokes.forEach(s => s.style.opacity=0); // Duman kayboluyor
+      }
+
+      requestAnimationFrame(checkVolume);
+    }
+
+    checkVolume();
+
+  } catch(err) {
+    console.error("Mikrofon erişimi reddedildi veya hata:", err);
+  }
+}
+
+startMic();
+</script>
 </body>
 </html>
