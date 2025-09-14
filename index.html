@@ -1,80 +1,92 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Masal'ın Doğum Günü</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: url("masal.png") no-repeat center center/cover;
-      font-family: sans-serif;
-    }
+<meta charset="UTF-8">
+<title>Masal'ın Doğum Günü</title>
+<style>
+body {
+  margin:0;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: url("masal.png") no-repeat center center/cover;
+  font-family:sans-serif;
+}
 
-    /* Pasta tabanı */
-    .cake {
-      position: relative;
-      width: 200px;
-      height: 120px;
-      background: linear-gradient(to top, #f9c5d1, #f28e9b);
-      border-radius: 100px 100px 20px 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
+/* Pasta gövdesi */
+.cake {
+  position: relative;
+  width: 220px;
+  height: 140px;
+  background: linear-gradient(to top, #f28e9b, #f9c5d1);
+  border-radius: 50% 50% 20% 20%;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
 
-    /* Mumlar */
-    .candle {
-      position: absolute;
-      bottom: 100%;
-      width: 12px;
-      height: 40px;
-      background: white;
-      border-radius: 4px;
-      margin: 0 5px;
-    }
+/* Pasta altı gölge */
+.cake::after {
+  content:'';
+  position:absolute;
+  bottom:-10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:150px;
+  height:20px;
+  background:rgba(0,0,0,0.2);
+  border-radius:50%;
+}
 
-    .flame {
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 12px;
-      height: 20px;
-      background: radial-gradient(ellipse at center, #ffeb3b 0%, #ff9800 70%, transparent 100%);
-      border-radius: 50%;
-      animation: flicker 1s infinite;
-    }
+/* Mumlar konteyner */
+.candles {
+  position:absolute;
+  top:-40px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+}
 
-    @keyframes flicker {
-      0%   { transform: translateX(-50%) scale(1); opacity: 1; }
-      25%  { transform: translateX(-50%) scale(1.1, 0.9); opacity: 0.9; }
-      50%  { transform: translateX(-50%) scale(0.9, 1.1); opacity: 1; }
-      75%  { transform: translateX(-50%) scale(1.05, 0.95); opacity: 0.95; }
-      100% { transform: translateX(-50%) scale(1); opacity: 1; }
-    }
+/* Mum gövdesi */
+.candle {
+  position: relative;
+  width: 12px;
+  height: 40px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
 
-    /* Mumlar pasta üstünde hizalanacak */
-    .candles {
-      position: absolute;
-      top: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-    }
+/* Mum alevi */
+.flame {
+  position:absolute;
+  top:-20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:12px;
+  height:20px;
+  background: radial-gradient(ellipse at center, #ffeb3b 0%, #ff9800 70%, transparent 100%);
+  border-radius:50%;
+  animation: flicker 0.9s infinite;
+}
 
-  </style>
+@keyframes flicker {
+  0% {transform:translateX(-50%) scale(1); opacity:1;}
+  25% {transform:translateX(-50%) scale(1.1,0.9); opacity:0.9;}
+  50% {transform:translateX(-50%) scale(0.9,1.1); opacity:1;}
+  75% {transform:translateX(-50%) scale(1.05,0.95); opacity:0.95;}
+  100% {transform:translateX(-50%) scale(1); opacity:1;}
+}
+</style>
 </head>
 <body>
-  <div class="cake">
-    <div class="candles">
-      <div class="candle"><div class="flame"></div></div>
-      <div class="candle"><div class="flame"></div></div>
-      <div class="candle"><div class="flame"></div></div>
-      <!-- İstersen daha fazla mum ekleyebilirsin -->
-    </div>
+<div class="cake">
+  <div class="candles">
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
   </div>
+</div>
 </body>
 </html>
